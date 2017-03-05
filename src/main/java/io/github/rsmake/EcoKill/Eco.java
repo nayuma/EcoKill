@@ -22,12 +22,16 @@ public class Eco extends JavaPlugin implements Listener{
     public static Economy econ = null;
     public static Permission perms = null;
     public static Chat chat = null;
+    private double moneyOnKill = 5;
+    private double moneyOnDeath = 2;
 
     @Override
     public void onLoad() {
         if (!new File(this.getDataFolder(), "config.yml").exists()) {
             this.saveDefaultConfig();
         }
+        moneyOnKill = getConfig().getDouble("Money.OnKill");
+        moneyOnDeath = getConfig().getDouble("Money.OnDeath");
     }
 
     @Override
@@ -53,6 +57,8 @@ public class Eco extends JavaPlugin implements Listener{
     public void reloadConfig(){
         this.reloadConfig();
         logger.info(String.format("[%s] - Configuration reloaded.", getDescription().getName()));
+        moneyOnKill = getConfig().getDouble("Money.OnKill");
+        moneyOnDeath = getConfig().getDouble("Money.OnDeath");
     }
 
     private boolean setupEconomy() {
@@ -85,13 +91,14 @@ public class Eco extends JavaPlugin implements Listener{
         Player player = e.getEntity().getPlayer();
 
         if (killer == null){
-            player.sendMessage(ChatColor.DARK_AQUA + "You were killed by the environment and lost $" + ChatColor.GOLD + getConfig().getDouble("OnDeathMoneyLost"));
-            econ.withdrawPlayer(player, getConfig().getDouble("OnDeathMoneyLost"));
+            player.sendMessage(ChatColor.DARK_AQUA + "You were killed by the environment and lost $" + ChatColor.GOLD + moneyOnDeath);
+            econ.withdrawPlayer(player, moneyOnDeath);
         }else{
-            killer.sendMessage(ChatColor.DARK_AQUA + "You killed " + player.getDisplayName() + " and earned $" + ChatColor.GOLD + getConfig().getDouble("OnKillMoneyEarned"));
-            econ.depositPlayer(killer, getConfig().getDouble("OnKillMoneyEarned"));
+            killer.sendMessage(ChatColor.DARK_AQUA + "You killed " + player.getDisplayName() + " and earned $" + ChatColor.GOLD + moneyOnKill);
+            econ.depositPlayer(killer, moneyOnKill);
         }
     }
+
     public void onCommand(CommandSender sender, Command cmd, String[]args){
         if (cmd.getName().equalsIgnoreCase("ecoreload")){
             if (sender.hasPermission("ecokill.reload")){

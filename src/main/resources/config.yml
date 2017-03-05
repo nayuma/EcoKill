@@ -1,2 +1,3 @@
-OnKillMoneyEarned: 5
-OnDeathMoneyLost: 2
+Money:
+  OnKill: 5
+  OnDeath: 2
