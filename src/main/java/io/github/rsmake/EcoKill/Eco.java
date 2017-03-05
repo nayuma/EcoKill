@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.logging.Logger;
 
-public class Eco extends JavaPlugin implements Listener, CommandExecutor{
+public class Eco extends JavaPlugin implements Listener{
 
     public final static Logger logger = Logger.getLogger("minecraft");
     private double moneyOnKill;
@@ -61,11 +61,13 @@ public class Eco extends JavaPlugin implements Listener, CommandExecutor{
         Player player = e.getEntity().getPlayer();
 
         if (killer == null){
-            player.sendMessage(ChatColor.DARK_AQUA + "You were killed by the environment and lost " + ChatColor.GOLD + "$" + moneyOnDeath);
+            player.sendMessage(ChatColor.DARK_AQUA + "You were killed by the environment and lost " + ChatColor.GREEN + "$" + moneyOnDeath);
             s.econ.withdrawPlayer(player, moneyOnDeath);
         }else{
-            killer.sendMessage(ChatColor.DARK_AQUA + "You killed " + player.getDisplayName() + " and earned " + ChatColor.GOLD + "$" + moneyOnKill);
+            killer.sendMessage(ChatColor.DARK_AQUA + "You killed " + player.getDisplayName() + " and earned " + ChatColor.GREEN + "$" + moneyOnKill);
+            player.sendMessage(ChatColor.DARK_AQUA + "You were killed by " + killer.getDisplayName() + " and lost " + ChatColor.GREEN + "$" + moneyOnDeath);
             s.econ.depositPlayer(killer, moneyOnKill);
+            s.econ.withdrawPlayer(player, moneyOnDeath);
         }
     }
 
@@ -76,7 +78,7 @@ public class Eco extends JavaPlugin implements Listener, CommandExecutor{
                 reloadPlugin();
                 return true;
             }else{
-                sender.sendMessage(ChatColor.RED + "Insufficient permissions to execute command.");
+                sender.sendMessage(ChatColor.DARK_RED + "Insufficient permissions to execute command.");
                 return false;
             }
         }
