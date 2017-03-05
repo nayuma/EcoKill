@@ -1,0 +1,14 @@
+name: EcoKill
+main: io.github.rsmake.EcoKill.Eco
+version: 1.0
+author: RSmake
+
+commands:
+   ecoreload:
+      description: Reload
+      usage: /ecoreload
+
+permissions:
+    ecokill.reload:
+        description: Allows you to reload the EcoKill plugin.
+        default: op
