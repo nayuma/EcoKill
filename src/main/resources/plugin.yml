@@ -2,6 +2,7 @@ name: EcoKill
 main: io.github.rsmake.EcoKill.Eco
 version: 1.0
 author: RSmake
+depend: [Vault]
 
 commands:
   ecoreload:

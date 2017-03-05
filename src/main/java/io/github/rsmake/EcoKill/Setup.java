@@ -5,7 +5,7 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-public class Setup{
+public class Setup {
 
     public static Economy econ = null;
     public static Permission perms = null;
@@ -13,7 +13,7 @@ public class Setup{
 
     private final Eco plugin;
 
-    public Setup(Eco plugin){
+    public Setup(Eco plugin) {
         this.plugin = plugin;
     }
 
