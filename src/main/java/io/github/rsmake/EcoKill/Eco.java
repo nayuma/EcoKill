@@ -1,9 +1,6 @@
 package io.github.rsmake.EcoKill;
 
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -69,19 +66,5 @@ public class Eco extends JavaPlugin implements Listener{
             s.econ.depositPlayer(killer, moneyOnKill);
             s.econ.withdrawPlayer(player, moneyOnDeath);
         }
-    }
-
-    public boolean onCommand(CommandSender sender, Command cmd, String[]args){
-        if (cmd.getName().equalsIgnoreCase("ecoreload")){
-            if (sender.hasPermission("ecokill.reload")){
-                sender.sendMessage(ChatColor.DARK_AQUA + "Configuration reloaded.");
-                reloadPlugin();
-                return true;
-            }else{
-                sender.sendMessage(ChatColor.DARK_RED + "Insufficient permissions to execute command.");
-                return false;
-            }
-        }
-        return false;
     }
 }
