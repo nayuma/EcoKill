@@ -59,13 +59,25 @@ public class Eco extends JavaPlugin implements Listener{
         Player player = e.getEntity().getPlayer();
 
         if (killer == null){
-            player.sendMessage(ChatColor.DARK_AQUA + "You were killed by the environment and lost " + ChatColor.GREEN + "$" + moneyOnDeath);
-            s.econ.withdrawPlayer(player, moneyOnDeath);
+            if(moneyOnDeath != 0) {
+                player.sendMessage(ChatColor.DARK_AQUA + "You were killed by the environment and lost " + ChatColor.GREEN + "$" + moneyOnDeath);
+                s.econ.withdrawPlayer(player, moneyOnDeath);
+            }else{
+                player.sendMessage(ChatColor.DARK_AQUA + "You were killed by the environment.");
+            }
         }else{
-            killer.sendMessage(ChatColor.DARK_AQUA + "You killed " + player.getDisplayName() + " and earned " + ChatColor.GREEN + "$" + moneyOnKill);
-            player.sendMessage(ChatColor.DARK_AQUA + "You were killed by " + killer.getDisplayName() + " and lost " + ChatColor.GREEN + "$" + moneyOnDeath);
-            s.econ.depositPlayer(killer, moneyOnKill);
-            s.econ.withdrawPlayer(player, moneyOnDeath);
+            if(moneyOnKill != 0) {
+                killer.sendMessage(ChatColor.DARK_AQUA + "You killed " + player.getDisplayName() + " and earned " + ChatColor.GREEN + "$" + moneyOnKill);
+                s.econ.depositPlayer(killer, moneyOnKill);
+            }else{
+                killer.sendMessage(ChatColor.DARK_AQUA + "You killed " + player.getDisplayName() + ".");
+            }
+            if(moneyOnDeath != 0) {
+                player.sendMessage(ChatColor.DARK_AQUA + "You were killed by " + killer.getDisplayName() + " and lost " + ChatColor.GREEN + "$" + moneyOnDeath);
+                s.econ.withdrawPlayer(player, moneyOnDeath);
+            }else{
+                player.sendMessage(ChatColor.DARK_AQUA + "You were killed by " + killer.getDisplayName() + ".");
+            }
         }
     }
 }
