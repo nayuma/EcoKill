@@ -4,11 +4,11 @@ version: 1.0
 author: RSmake
 
 commands:
-   ecoreload:
-      description: Reload
-      usage: /ecoreload
+  ecoreload:
+    description: Reload the EcoKill Plugin
+    usage: /ecoreload
 
 permissions:
-    ecokill.reload:
-        description: Allows you to reload the EcoKill plugin.
-        default: op
+  ecokill.reload:
+    description: Allows you to reload the EcoKill plugin.
+    default: op

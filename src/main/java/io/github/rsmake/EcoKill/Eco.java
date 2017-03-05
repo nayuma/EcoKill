@@ -50,11 +50,11 @@ public class Eco extends JavaPlugin implements Listener{
     @Override
     public void onDisable(){
         this.saveConfig();
-        getLogger().info(String.format("[%s] -Plugin disabled.", getDescription().getName()));
+        getLogger().info(String.format("[%s] - Plugin disabled.", getDescription().getName()));
     }
 
-    @Override
-    public void reloadConfig(){
+
+    public void reloadPlugin(){
         this.reloadConfig();
         logger.info(String.format("[%s] - Configuration reloaded.", getDescription().getName()));
         moneyOnKill = getConfig().getDouble("Money.OnKill");
@@ -91,10 +91,10 @@ public class Eco extends JavaPlugin implements Listener{
         Player player = e.getEntity().getPlayer();
 
         if (killer == null){
-            player.sendMessage(ChatColor.DARK_AQUA + "You were killed by the environment and lost $" + ChatColor.GOLD + moneyOnDeath);
+            player.sendMessage(ChatColor.DARK_AQUA + "You were killed by the environment and lost " + ChatColor.GOLD + "$" + moneyOnDeath);
             econ.withdrawPlayer(player, moneyOnDeath);
         }else{
-            killer.sendMessage(ChatColor.DARK_AQUA + "You killed " + player.getDisplayName() + " and earned $" + ChatColor.GOLD + moneyOnKill);
+            killer.sendMessage(ChatColor.DARK_AQUA + "You killed " + player.getDisplayName() + " and earned " + ChatColor.GOLD + "$" + moneyOnKill);
             econ.depositPlayer(killer, moneyOnKill);
         }
     }
@@ -103,7 +103,7 @@ public class Eco extends JavaPlugin implements Listener{
         if (cmd.getName().equalsIgnoreCase("ecoreload")){
             if (sender.hasPermission("ecokill.reload")){
                 sender.sendMessage(ChatColor.DARK_AQUA + "Configuration reloaded.");
-                reloadConfig();
+                reloadPlugin();
             }else{
                 sender.sendMessage(ChatColor.RED + "Insufficient permissions to execute command.");
             }
