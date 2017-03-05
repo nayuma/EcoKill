@@ -2,6 +2,7 @@ package io.github.rsmake.EcoKill;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,12 +13,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.logging.Logger;
 
-public class Eco extends JavaPlugin implements Listener{
+public class Eco extends JavaPlugin implements Listener, CommandExecutor{
 
     public final static Logger logger = Logger.getLogger("minecraft");
     private double moneyOnKill;
     private double moneyOnDeath;
-    Setup s = new Setup();
+    Setup s = new Setup(this);
 
     @Override
     public void onLoad() {

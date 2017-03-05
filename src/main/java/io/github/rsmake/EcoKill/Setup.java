@@ -4,19 +4,24 @@ import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
 
-public class Setup extends JavaPlugin{
+public class Setup{
 
     public static Economy econ = null;
     public static Permission perms = null;
     public static Chat chat = null;
 
+    private final Eco plugin;
+
+    public Setup(Eco plugin){
+        this.plugin = plugin;
+    }
+
     public boolean setupEconomy() {
-        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+        if (plugin.getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
         }
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        RegisteredServiceProvider<Economy> rsp = plugin.getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             return false;
         }
@@ -25,13 +30,13 @@ public class Setup extends JavaPlugin{
     }
 
     public boolean setupChat() {
-        RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
+        RegisteredServiceProvider<Chat> rsp = plugin.getServer().getServicesManager().getRegistration(Chat.class);
         chat = rsp.getProvider();
         return chat != null;
     }
 
     public boolean setupPermissions() {
-        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        RegisteredServiceProvider<Permission> rsp = plugin.getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();
         return perms != null;
     }
