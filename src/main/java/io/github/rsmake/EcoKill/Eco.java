@@ -37,6 +37,7 @@ public class Eco extends JavaPlugin implements Listener{
         s.setupChat();
         logger.info(String.format("[%s] - Plugin enabled. Vault dependency found.", getDescription().getName()));
         getServer().getPluginManager().registerEvents(this, this);
+        this.getCommand("ecoreload").setExecutor(new Commands(this));
     }
 
     @Override
