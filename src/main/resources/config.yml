@@ -1,3 +1,3 @@
 Money:
-  OnKill: 5
-  OnDeath: 2
+  OnKill: 10
+  OnDeath: 5

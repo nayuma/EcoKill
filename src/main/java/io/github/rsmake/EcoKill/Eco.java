@@ -18,7 +18,7 @@ public class Eco extends JavaPlugin implements Listener {
     @Override
     public void onLoad() {
         if (!new File(this.getDataFolder(), "config.yml").exists()) {
-            this.saveDefaultConfig();
+                this.saveDefaultConfig();
         }
         moneyOnKill = getConfig().getDouble("Money.OnKill");
         moneyOnDeath = getConfig().getDouble("Money.OnDeath");
