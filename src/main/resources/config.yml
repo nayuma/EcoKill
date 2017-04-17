@@ -1,3 +1,23 @@
-Money:
-  OnKill: 10
-  OnDeath: 5
+#Hello there person editing this config, here you can change
+#the economical value outputs for every individual setting.
+
+#This is when a player kills another player:
+
+PvP:
+  OnKill: 20
+  OnDeath: 20
+  Enabled: true
+
+#This is when a player kills an entity
+#or... gets killed by one:
+
+PvE:
+  OnKill: 5
+  OnDeath: 50
+  Enabled: false
+
+#Enviornremental deaths are a thing too:
+
+Env:
+  OnDeath: 50
+  Enabled: false

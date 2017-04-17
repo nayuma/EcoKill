@@ -1,6 +1,6 @@
 name: EcoKill
 main: io.github.rsmake.EcoKill.Eco
-version: 1.0
+version: 1.2
 author: RSmake
 depend: [Vault]
 

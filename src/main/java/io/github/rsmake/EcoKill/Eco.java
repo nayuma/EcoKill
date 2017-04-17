@@ -1,6 +1,8 @@
 package io.github.rsmake.EcoKill;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,17 +13,30 @@ import java.io.File;
 
 public class Eco extends JavaPlugin implements Listener {
 
-    private double moneyOnKill;
-    private double moneyOnDeath;
+    private double PvPOnKill;
+    private double PvPOnDeath;
+    private double PvEOnKill;
+    private double PvEOnDeath;
+    private double EnvOnDeath;
+    private boolean pvp;
+    private boolean pve;
+    private boolean env;
+
     Setup s = new Setup(this);
 
     @Override
     public void onLoad() {
         if (!new File(this.getDataFolder(), "config.yml").exists()) {
-                this.saveDefaultConfig();
+            this.saveDefaultConfig();
         }
-        moneyOnKill = getConfig().getDouble("Money.OnKill");
-        moneyOnDeath = getConfig().getDouble("Money.OnDeath");
+        PvPOnKill = getConfig().getDouble("PvP.OnKill");
+        PvPOnDeath = getConfig().getDouble("PvP.OnDeath");
+        PvEOnKill = getConfig().getDouble("PvE.OnKill");
+        PvEOnDeath = getConfig().getDouble("PvE.OnDeath");
+        EnvOnDeath = getConfig().getDouble("Env.OnDeath");
+        pvp = getConfig().getBoolean("PvP.Enabled");
+        pve = getConfig().getBoolean("PvE.Enabled");
+        env = getConfig().getBoolean("Env.Enabled");
     }
 
     @Override
@@ -47,34 +62,48 @@ public class Eco extends JavaPlugin implements Listener {
     public void reloadPlugin() {
         this.reloadConfig();
         getLogger().info(String.format("[%s] - Configuration reloaded.", getDescription().getName()));
-        moneyOnKill = getConfig().getDouble("Money.OnKill");
-        moneyOnDeath = getConfig().getDouble("Money.OnDeath");
+        PvPOnKill = getConfig().getDouble("PvP.OnKill");
+        PvPOnDeath = getConfig().getDouble("PvP.OnDeath");
+        PvEOnKill = getConfig().getDouble("PvE.OnKill");
+        PvEOnDeath = getConfig().getDouble("PvE.OnDeath");
+        EnvOnDeath = getConfig().getDouble("EnvOnDeath");
     }
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
-        Player killer = e.getEntity().getKiller();
-        Player player = e.getEntity().getPlayer();
+        Entity murdurer = e.getEntity().getKiller();
+        Entity player = e.getEntity().getPlayer();
 
-        if (killer == null) {
-            if (moneyOnDeath != 0) {
-                player.sendMessage(ChatColor.DARK_AQUA + "You were killed by the environment and lost " + ChatColor.GREEN + "$" + moneyOnDeath);
-                s.econ.withdrawPlayer(player, moneyOnDeath);
-            } else {
-                player.sendMessage(ChatColor.DARK_AQUA + "You were killed by the environment.");
+        if (murdurer instanceof Player && player instanceof Player) {
+            Player killer = ((Player) murdurer).getPlayer();
+            Player killed = ((Player) player).getPlayer();
+
+            if (pvp = true) {
+                killer.sendMessage(ChatColor.DARK_AQUA + "You killed " + killed.getDisplayName() + ChatColor.DARK_AQUA + " and earned " + ChatColor.GREEN + "$" + PvPOnKill);
+                s.econ.depositPlayer(killer, PvPOnKill);
+                player.sendMessage(ChatColor.DARK_AQUA + "You were killed by " + killer.getDisplayName() + ChatColor.DARK_AQUA + " and lost " + ChatColor.GREEN + "$" + PvPOnDeath);
+                s.econ.withdrawPlayer(killed, PvPOnDeath);
             }
+
+        } else if (murdurer instanceof Monster && player instanceof Player) {
+            Player killed = ((Player) player).getPlayer();
+            if (pve = true) {
+                player.sendMessage(String.format(ChatColor.DARK_AQUA + "You were killed by " + murdurer.getType().toString().replace("_", " ").toLowerCase() + " and lost " + ChatColor.GREEN + "$%s", PvEOnDeath));
+                s.econ.withdrawPlayer(killed, PvEOnDeath);
+            }
+
+        } else if (murdurer instanceof Player && player instanceof Monster) {
+            Player killer = ((Player) murdurer).getPlayer();
+            if (pve = true) {
+                player.sendMessage(String.format(ChatColor.DARK_AQUA + "You killed " + player.getType().toString().replace("_", " ").toLowerCase() + " and won " + ChatColor.GREEN + "$%s", PvEOnKill));
+                s.econ.withdrawPlayer(killer, PvEOnDeath);
+            }
+
         } else {
-            if (moneyOnKill != 0) {
-                killer.sendMessage(ChatColor.DARK_AQUA + "You killed " + player.getDisplayName() + " and earned " + ChatColor.GREEN + "$" + moneyOnKill);
-                s.econ.depositPlayer(killer, moneyOnKill);
-            } else {
-                killer.sendMessage(ChatColor.DARK_AQUA + "You killed " + player.getDisplayName() + ".");
-            }
-            if (moneyOnDeath != 0) {
-                player.sendMessage(ChatColor.DARK_AQUA + "You were killed by " + killer.getDisplayName() + " and lost " + ChatColor.GREEN + "$" + moneyOnDeath);
-                s.econ.withdrawPlayer(player, moneyOnDeath);
-            } else {
-                player.sendMessage(ChatColor.DARK_AQUA + "You were killed by " + killer.getDisplayName() + ".");
+            Player killed = ((Player) player).getPlayer();
+            if (env = true) {
+                player.sendMessage(String.format(ChatColor.DARK_AQUA + "You were killed by the environment and lost " + ChatColor.GREEN + "$%s", EnvOnDeath));
+                s.econ.withdrawPlayer(killed, EnvOnDeath);
             }
         }
     }
