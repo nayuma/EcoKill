@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
-public class Main extends JavaPlugin{
+public class Main extends JavaPlugin {
 
     public static Economy econ = null;
     public static Permission perms = null;

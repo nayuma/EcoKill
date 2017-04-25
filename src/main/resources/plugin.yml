@@ -3,6 +3,7 @@ main: io.github.rsmake.EcoKill.Main
 version: 1.2
 author: RSmake
 depends: [Vault]
+
 commands:
   ecoreload:
     description: Reload the EcoKill Plugin
