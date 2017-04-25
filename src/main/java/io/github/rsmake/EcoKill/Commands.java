@@ -7,9 +7,9 @@ import org.bukkit.command.CommandSender;
 
 public class Commands implements CommandExecutor {
 
-    private final Eco plugin;
+    private final Main plugin;
 
-    public Commands(Eco plugin) {
+    public Commands(Main plugin) {
         this.plugin = plugin;
     }
 

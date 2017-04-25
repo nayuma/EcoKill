@@ -1,12 +1,12 @@
 name: EcoKill
-main: io.github.rsmake.EcoKill.Eco
+main: io.github.rsmake.EcoKill.Main
 version: 1.2
 author: RSmake
-depend: [Vault]
 
 commands:
   ecoreload:
     description: Reload the EcoKill Plugin
+    permission: ecokill.reload
     usage: /ecoreload
 
 permissions:
