@@ -12,6 +12,10 @@ public class Events implements Listener {
 
     Main s;
 
+    public Events(Main main) {
+        this.s = main;
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDeath(PlayerDeathEvent e) {
         Player killed = e.getEntity().getPlayer();
