@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 
 public class Commands implements CommandExecutor {
 
-    private final Main plugin;
+    Main plugin;
 
     public Commands(Main plugin) {
         this.plugin = plugin;

@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
-public class Main extends JavaPlugin{
+public class Main extends JavaPlugin {
 
     public static Economy econ = null;
     public static Permission perms = null;
@@ -39,7 +39,7 @@ public class Main extends JavaPlugin{
         setupPermissions();
         setupChat();
         getLogger().info(String.format("[%s] - Plugin enabled. Vault dependency found.", getDescription().getName()));
-        getServer().getPluginManager().registerEvents(new Events(), this);
+        getServer().getPluginManager().registerEvents(new Events(this), this);
         this.getCommand("ecoreload").setExecutor(new Commands(this));
 
         PvPOnKill = getConfig().getDouble("PvP.OnKill");
