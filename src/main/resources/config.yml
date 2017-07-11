@@ -3,19 +3,19 @@
 
 #This is when a player kills another player:
 
-PvP:
-  OnKill: 20
-  OnDeath: 20
-  Enabled: true
+pvp:
+  onKill: 20
+  onDeath: 20
+  enabled: true
 
 #Died by a mob? Change on death values here:
 
-PvE:
-  OnDeath: 50
-  Enabled: false
+pve:
+  onDeath: 50
+  enabled: false
 
 #Environmental deaths are a thing too:
 
-Env:
-  OnDeath: 20
-  Enabled: false
+env:
+  onDeath: 20
+  enabled: false

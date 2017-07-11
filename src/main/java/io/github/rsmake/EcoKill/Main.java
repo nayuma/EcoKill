@@ -23,50 +23,24 @@ public class Main extends JavaPlugin {
     public boolean env;
 
     @Override
-    public void onLoad() {
-        if (!new File(this.getDataFolder(), "config.yml").exists()) {
-            this.saveDefaultConfig();
-        }
-    }
-
-    @Override
     public void onEnable() {
+        saveDefaultConfig();
         if (!setupEconomy()) {
-            getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            getLogger().severe("Please install Vault to use EcoKill, it has temporarily been disabled.");
             getServer().getPluginManager().disablePlugin(this);
-            return;
         }
         setupPermissions();
         setupChat();
         getLogger().info(String.format("[%s] - Plugin enabled. Vault dependency found.", getDescription().getName()));
         getServer().getPluginManager().registerEvents(new Events(this), this);
-        this.getCommand("ecoreload").setExecutor(new Commands(this));
 
-        PvPOnKill = getConfig().getDouble("PvP.OnKill");
-        PvPOnDeath = getConfig().getDouble("PvP.OnDeath");
-        PvEOnDeath = getConfig().getDouble("PvE.OnDeath");
-        EnvOnDeath = getConfig().getDouble("Env.OnDeath");
-        pvp = getConfig().getBoolean("PvP.Enabled");
-        pve = getConfig().getBoolean("PvE.Enabled");
-        env = getConfig().getBoolean("Env.Enabled");
-    }
-
-    @Override
-    public void onDisable() {
-        this.saveConfig();
-        getLogger().info(String.format("[%s] - Plugin disabled.", getDescription().getName()));
-    }
-
-    public void reloadPlugin() {
-        this.reloadConfig();
-        getLogger().info(String.format("[%s] - Configuration reloaded.", getDescription().getName()));
-        PvPOnKill = getConfig().getDouble("PvP.OnKill");
-        PvPOnDeath = getConfig().getDouble("PvP.OnDeath");
-        PvEOnDeath = getConfig().getDouble("PvE.OnDeath");
-        EnvOnDeath = getConfig().getDouble("Env.OnDeath");
-        pvp = getConfig().getBoolean("PvP.Enabled");
-        pve = getConfig().getBoolean("PvE.Enabled");
-        env = getConfig().getBoolean("Env.Enabled");
+        PvPOnKill = getConfig().getDouble("pvp.onKill");
+        PvPOnDeath = getConfig().getDouble("pvp.onDeath");
+        PvEOnDeath = getConfig().getDouble("pve.onDeath");
+        EnvOnDeath = getConfig().getDouble("env.onDeath");
+        pvp = getConfig().getBoolean("pvp.enabled");
+        pve = getConfig().getBoolean("pve.enabled");
+        env = getConfig().getBoolean("env.enabled");
     }
 
     private boolean setupEconomy() {

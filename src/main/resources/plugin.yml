@@ -3,14 +3,3 @@ main: io.github.rsmake.EcoKill.Main
 version: 1.2
 author: RSmake
 depends: [Vault]
-
-commands:
-  ecoreload:
-    description: Reload the EcoKill Plugin
-    permission: ecokill.reload
-    usage: /ecoreload
-
-permissions:
-  ecokill.reload:
-    description: Allows you to reload the EcoKill plugin.
-    default: op
